@@ -51,4 +51,10 @@ public class ShoppingBasketTest {
         assertEquals(expectedTotalPrice, actualTotalPrice, delta);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCalculateTotalPrice_NoItem() {
+        Map<String, Integer> basket = new HashMap<>();
+        ShoppingBasket.calculateTotalPrice(basket);
+    }
+
 }

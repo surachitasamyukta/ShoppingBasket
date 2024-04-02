@@ -17,25 +17,29 @@ public class ShoppingBasket {
 
 
     static double calculateTotalPrice(Map<String, Integer> basket) {
-        double total = 0.0;
+        if (!basket.isEmpty()) {
+            double total = 0.0;
 
-        for (Map.Entry<String, Integer> entry : basket.entrySet()) {
-            String itemInBasket = entry.getKey();
-            if (itemsWithPrices.containsKey(itemInBasket)) {
-                int quantityInBasket = entry.getValue();
-                for (Map.Entry<String, Pair<Double, Offer>> itemEntry : itemsWithPrices.entrySet()) {
-                    Pair<Double, Offer> itemValue = itemEntry.getValue();
-                    if (itemEntry.getKey().equals((itemInBasket))) {
-                        Double price = itemValue.getLeft();
-                        total += calculatePriceWithOffer(quantityInBasket, price, itemValue.getRight());
+            for (Map.Entry<String, Integer> entry : basket.entrySet()) {
+                String itemInBasket = entry.getKey();
+                if (itemsWithPrices.containsKey(itemInBasket)) {
+                    int quantityInBasket = entry.getValue();
+                    for (Map.Entry<String, Pair<Double, Offer>> itemEntry : itemsWithPrices.entrySet()) {
+                        Pair<Double, Offer> itemValue = itemEntry.getValue();
+                        if (itemEntry.getKey().equals((itemInBasket))) {
+                            Double price = itemValue.getLeft();
+                            total += calculatePriceWithOffer(quantityInBasket, price, itemValue.getRight());
+                        }
                     }
-                }
 
-            } else {
-                System.out.println(itemInBasket + " not present in System");
+                } else {
+                    System.out.println(itemInBasket + " not present in System");
+                }
             }
+            return total;
+        } else {
+            throw new IllegalArgumentException("Empty basket ! Please add items");
         }
-        return total;
     }
 
 
